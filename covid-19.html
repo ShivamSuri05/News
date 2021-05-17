@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="news.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+    <link rel="icon" href="images/logo2.jpeg" type="image/icon type">
+    <title>News Updates</title>
+  </head>
+  <body>
+    <header>
+    <div id="headercontainer">
+        
+        <div id="image"><img src="images/logo.jpeg" alt="News Update Logo"></img></div>
+        <div id="text"><h5>News That Actually Matters</h5></div>
+        <div id="time">
+            <span id="writetime">Fetching...</span><br>
+            <span id="writedate">Fetching...</span><br>
+            <span id="writeday">Fetching...</span>      
+        </div>
+        
+    </div>
+    </header>
+    <div id="navcontainer">
+      <nav class="nav nav-pills nav-fill">
+        <a class="nav-link text-white" aria-current="page" href="index.html">News Feed</a>
+        <a class="nav-link text-white active" href="#">Covid-19 Dashboard</a>
+        <a class="nav-link text-white" href="fakenews.html">Fake News Buster</a>
+        <a class="nav-link text-white" href="javascript:void(0);" onclick="window.scroll(0,document.body.scrollHeight);">Follow Us</a>
+      </nav>
+    </div>
+
+    <div class="main" style="text-align: center;">
+      <div id="stats">
+        <marquee id="run" onMouseOver="this.stop()" onMouseOut="this.start()"><h5>Covid Helpline Number : +91-11-23978046  &emsp;&emsp;  | &emsp;&emsp;   Toll Free : 1075  &emsp;&emsp;  |  &emsp; &emsp;  Helpline Email ID : ncov2019@gov.in</h5></marquee>
+        <h6 id="showDate"></h6>
+        <div class="box text-white">
+          <h6>Total Confirmed Cases</h6>
+          <span id="tcases"></span><br>
+          <span id="dcases"></span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+          </svg>
+          <br>
+        </div>
+        <div class="box text-white">
+          <h6>Active Cases</h6>
+          <span id="tactive"></span><br>
+          <span id="dactive"></span>
+          <svg id="show1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+          </svg>
+          <svg id="show2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+          </svg>
+          <br>
+        </div>
+        <div class="box text-white">
+          <h6>Total Deaths</h6>
+          <span id="tdeaths"></span><br>
+          <span id="ddeaths"></span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+          </svg>
+          <br>
+        </div>
+      </div>
+      <div id="graph">
+        Last 30 Days Trend
+        <canvas id="myChart" ></canvas>
+      </div>
+      <div id="statetable">
+        <div id="thead" ><h5><b>State wise stats</b></h5></div>
+        <table id="statestable" class="table table-striped table-hover table-info">
+          <tbody>
+            <tr id="heading">
+              <th id="col1" scope="col">S.No</th>
+              <th id="col2" scope="col">State/U.T.</th>
+              <th id="col3" scope="col">Daily Cases</th>
+              <th id="col4" scope="col">Daily death</th>
+              <th id="col5" scope="col">Total Cases</th>
+              <th id="col6" scope="col">Active Cases</th>
+              <th id="col7" scope="col">Total Deaths</th>
+              <th id="col8" scope="col">Last Updated</th>
+            </tr>
+          </tbody>  
+        </table>
+      </div>
+    </div>
+
+    <footer>
+      <div id="image1" ><img src="images/logo.png" alt="News Update Logo"></img></div>
+      <div id="foot" class="text-white">
+        <a href="javascript:void(0);" onclick="window.scroll(0,1);"><img id="backtop" src="images/top.png" title="Back To Top" width="25px" height="25px"></img></a>
+          <ul>
+            <!-- <li>Credits: <a class="text-white" href="https://www.ndtv.com" target="_blank">NDTV</a></li> -->
+            <li>Developed By: Shivam Suri</li>
+            <li>Follow Us <a href="https://www.instagram.com/newz.updates/" target="_blank">
+              <img id="footimage" src="images/insta.png" alt="insta_logo"></img>
+            </a></li>
+            </ul>
+      </div>
+    </footer>
+    <script src="scripts/getDateTime.js"></script>
+    <script src="scripts/fetchdata.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+  </body>
+</html>

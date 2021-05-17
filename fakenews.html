@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="news.css" rel="stylesheet">
+    <link rel="icon" href="images/logo2.jpeg" type="image/icon type">
+    <title>News Updates</title>
+  </head>
+  <body>
+    <header>
+    <div id="headercontainer">
+        
+        <div id="image"><img src="images/logo.jpeg" alt="News Update Logo"></img></div>
+        <div id="text"><h5>News That Actually Matters</h5></div>
+        <div id="time">
+            <span id="writetime">Fetching...</span><br>
+            <span id="writedate">Fetching...</span><br>
+            <span id="writeday">Fetching...</span>        
+        </div>
+        
+    </div>
+    </header>
+    <div id="navcontainer">
+      <nav class="nav nav-pills nav-fill">
+        <a class="nav-link text-white" aria-current="page" href="index.html">News Feed</a>
+        <a class="nav-link text-white" href="covid-19.html">Covid-19 Dashboard</a>
+        <a class="nav-link text-white active" href="#">Fake News Buster</a>
+        <a class="nav-link text-white" href="javascript:void(0);" onclick="window.scroll(0,document.body.scrollHeight);">Follow Us</a>
+      </nav>
+    </div>
+
+    <div class="main">
+      <div id="fake">
+        <iframe src="https://www.ndtv.com/topic/fake-news" sandbox="allow-scripts" scrolling="no" width="105%" height="100%">
+        </iframe> 
+      </div>
+      <div id="links">
+         <span>You can explore more at these links</span>
+         <ul>
+           <li><a href="https://www.ndtv.com/topic/fake-news" target="_blank">NDTV</a></li>
+           <li><a href="https://www.altnews.in/" target="_blank">ALT News</a></li>
+           <li><a href="https://www.indiatoday.in/fact-check" target="_blank">India Today</a></li>
+           <li><a href="https://scroll.in/topic/55804/fake-news" target="_blank">Scroll.in</a></li>
+         </ul>
+      </div>
+
+    </div>
+
+
+    <footer>
+      <div id="image1"><img src="images/logo.png" alt="News Update Logo"></img></div>
+      <div id="foot" class="text-white">
+        <a href="javascript:void(0);" onclick="window.scroll(0,1);"><img id="backtop" src="images/top.png" title="Back To Top" width="25px" height="25px"></img></a>
+          <ul>
+            <li>Credits: <a class="text-white" href="https://www.ndtv.com" target="_blank">NDTV</a></li>
+            <li>Developed By: Shivam Suri</li>
+            <li>Follow Us <a href="https://www.instagram.com/newz.updates/" target="_blank">
+              <img id="footimage" src="images/insta.png" alt="insta_logo"></img>
+            </a></li>
+            </ul>
+      </div>
+    </footer>
+    <script src="scripts/getDateTime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+  </body>
+</html>
