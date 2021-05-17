@@ -10,6 +10,6 @@ Next tab is a Covid-19 dashboard which shows Covid related stats for India.<br>
 You can fetch the Covid data from this API.<br>
 <a href="https://api.covid19india.org/data.json" target="_blank">Covid-19 India API</a><br>
 I have published this website on <a href="https://news-updates.netlify.app" target="_blank">News Updates</a><br>
-Don't forget to follow my News Account on Instagram <a href="https://www.instagram.com/newz.updates/" target="_blank">News Updates</a><br>
+Don't forget to follow my News Account on Instagram <a href="https://www.instagram.com/newz.updates/" target="_blank">@newz.updates</a><br>
 Have fun!!<br>
 Thanks
