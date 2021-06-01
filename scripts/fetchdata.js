@@ -102,15 +102,20 @@ var myChart = new Chart(ctx, {
                     datestr += date[i];
                 }
             }
-            
-            let month = monthNames[parseInt(datestr[index+1])-1];
+            let ss = datestr[index+1]+datestr[index+2];
+            console.log(ss);
+            let id;
+            if(ss[0]==0)
+            {
+                id = ss[1];
+            }
+            else{
+                id = parseInt(ss);
+            }
+            let month = monthNames[id-1];
             datestr = "";
             for(let i=0;i<date.length;i++)
             {
-                // if(date[i]==" ")
-                // {
-                //     break;
-                // }
                 if(date[i]=="/")
                 {
                     datestr += " ";
@@ -119,11 +124,16 @@ var myChart = new Chart(ctx, {
                 {
                     datestr += month;
                 }
+                else if(i==index+2)
+                {
+                    datestr += "";
+                }
                 else
                 {
                     datestr += date[i];
                 }
             }
+            console.log(datestr);
             document.getElementById('showDate').innerHTML = 'Last Updated on '+ datestr;
             let cases = parseInt(actualdata.statewise[0].confirmed);
             let dcases = parseInt(actualdata.statewise[0].deltaconfirmed);
