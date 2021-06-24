@@ -72,9 +72,6 @@ var myChart = new Chart(ctx, {
 
 
 
-
-
-
             //make table
 
             let date = actualdata.statewise[0].lastupdatedtime;
@@ -220,6 +217,42 @@ var myChart = new Chart(ctx, {
                 }
                 
             }
+
+            
+//vaccine data
+
+let end = actualdata.tested.length;
+let totaldoses = actualdata.tested[end-1].totaldosesadministered;
+if(totaldoses=="")
+{
+    totaldoses = parseInt(actualdata.tested[end-2].totaldosesadministered);
+    let firstdose = parseInt(actualdata.tested[end-2].firstdoseadministered);
+    let dailydoses = totaldoses - parseInt(actualdata.tested[end-3].totaldosesadministered);
+    let dailyfirstdose = firstdose - parseInt(actualdata.tested[end-3].firstdoseadministered);
+    let seconddose = parseInt(actualdata.tested[end-2].seconddoseadministered);
+    document.getElementById('tvac').innerHTML = totaldoses.toLocaleString("hi-IN");
+    let dailyseconddose = seconddose - parseInt(actualdata.tested[end-3].seconddoseadministered);
+    document.getElementById('tfdose').innerHTML = firstdose.toLocaleString("hi-IN");
+    document.getElementById('dvac').innerHTML = dailydoses.toLocaleString("hi-IN");
+    document.getElementById('tsdose').innerHTML = seconddose.toLocaleString("hi-IN");
+    document.getElementById('dfdose').innerHTML = dailyfirstdose.toLocaleString("hi-IN");
+    document.getElementById('dsdose').innerHTML = dailyseconddose.toLocaleString("hi-IN");
+}
+else{
+    totaldoses =parseInt(totaldoses);
+    let firstdose = parseInt(actualdata.tested[end-1].firstdoseadministered);
+    let dailydoses = totaldoses - parseInt(actualdata.tested[end-2].totaldosesadministered);
+    let dailyfirstdose = firstdose - parseInt(actualdata.tested[end-2].firstdoseadministered);
+    let seconddose = parseInt(actualdata.tested[end-1].seconddoseadministered);
+    document.getElementById('tvac').innerHTML = totaldoses.toLocaleString("hi-IN");
+    let dailyseconddose = seconddose - parseInt(actualdata.tested[end-2].seconddoseadministered);
+    document.getElementById('tfdose').innerHTML = firstdose.toLocaleString("hi-IN");
+    document.getElementById('dvac').innerHTML = dailydoses.toLocaleString("hi-IN");
+    document.getElementById('tsdose').innerHTML = seconddose.toLocaleString("hi-IN");
+    document.getElementById('dfdose').innerHTML = dailyfirstdose.toLocaleString("hi-IN");
+    document.getElementById('dsdose').innerHTML = dailyseconddose.toLocaleString("hi-IN");
+}
+
         })
 
         
