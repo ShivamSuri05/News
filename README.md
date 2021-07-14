@@ -6,7 +6,7 @@ This is basically a website which fetches instagram's feed from Instagram Accoun
 <li>Access token of your Social account</li>
 </ul>
 Paste the access token of your account in scripts/getInsta.js file in accessToken title.<br>
-Next tab is a Covid-19 dashboard which shows Covid related stats for India.<br>
+Next tab is a Covid-19 dashboard which shows Covid and Vaccine related stats for India.<br>
 You can fetch the Covid data from this API.<br>
 <a href="https://api.covid19india.org/data.json" target="_blank">Covid-19 India API</a><br>
 I have published this website on <a href="https://news-updates.netlify.app" target="_blank">News Updates</a><br>
