@@ -1,258 +1,209 @@
 
 
-fetch('https://api.covid19india.org/data.json')
-        .then((apidata)=>{
-            return apidata.json();
-        }).then((actualdata)=>{
-            let last = Object.keys(actualdata.cases_time_series)[Object.keys(actualdata.cases_time_series).length-1];
-            // document.getElementById('showDate').innerHTML = 'Showing data for '+actualdata.cases_time_series[last].date;
-            // let cases = parseInt(actualdata.cases_time_series[last].totalconfirmed);
-            // let pcases = parseInt(actualdata.cases_time_series[last-1].totalconfirmed);
-            // let dcases = parseInt(actualdata.cases_time_series[last].dailyconfirmed);
-            // let deaths = parseInt(actualdata.cases_time_series[last].totaldeceased);
-            // let pdeaths = parseInt(actualdata.cases_time_series[last-1].totaldeceased);
-            // let ddeaths = parseInt(actualdata.cases_time_series[last].dailydeceased);
-            // let recovered = parseInt(actualdata.cases_time_series[last].totalrecovered);
-            // let precovered = parseInt(actualdata.cases_time_series[last-1].totalrecovered);
-            // let dactive = (cases-recovered-deaths) - (pcases-precovered-pdeaths);
+fetch('https://data.covid19india.org/v4/min/timeseries.min.json')
+.then(apidata=>apidata.json())
+.then(actualdata =>{
+    let arr = Object.entries(actualdata);
+    let array = Object.entries(arr[33][1].dates);
+    let last = array.length;
 
-            let datta = [];
-            let labbels = [];
-            for(let i=0;i<90;i++)
-            {
-                datta.push(actualdata.cases_time_series[last-i].dailyconfirmed);
-                labbels.push(actualdata.cases_time_series[last-i].date);
-            }
-            //make graph
-            var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: labbels,
-        datasets: [{
-            label: 'No. of Daily Cases',
-            data: datta,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            },
-            x:{
-                reverse: true
-            }
-        }
+    //console.log(array[last-1][0]);
+
+    // document.getElementById('showDate').innerHTML = 'Showing data for '+array[last-1][0];
+    //console.log(array[last-1][1].total['confirmed']);
+    document.getElementById('showDate').innerHTML = 'Showing data for '+ array[last-1][0];
+    let dcases = parseInt(array[last-1][1].delta['confirmed']);
+    let cases = parseInt(array[last-1][1].total['confirmed']);
+    //console.log(array[last-1][1]);
+    let deaths = parseInt(array[last-1][1].total['deceased']);
+    let ddeaths = parseInt(array[last-1][1].delta['deceased']);
+    let recovered = parseInt(array[last-1][1].total['recovered']);
+    //let drecovered = parseInt(array[last-1][1].delta['recovered']);
+    let pactive = cases-recovered-deaths;
+    //console.log(cases-recovered-deaths);
+    //let pdcases = parseInt(array[last-2][1].delta['confirmed']);
+    let pcases = parseInt(array[last-2][1].total['confirmed']);
+    //console.log(array[last-2][1]);
+    let pdeaths = parseInt(array[last-2][1].total['deceased']);
+    //let pddeaths = parseInt(array[last-2][1].delta['deceased']);
+    let precovered = parseInt(array[last-2][1].total['recovered']);
+    //let pdrecovered = parseInt(array[last-2][1].delta['recovered']);
+    let ppactive = pcases-precovered-pdeaths ;
+    //console.log(pcases-precovered-pdeaths - (cases-recovered-deaths));
+    //console.log(cases-deaths-recovered);
+    //console.log(pactive);
+    let active = pactive;
+    let dactive = active - ppactive;
+    //console.log(dactive);
+    if(dactive<0)
+    {
+        dactive = -dactive;
+        document.getElementById('show1').style.display = "none";
     }
+    else{
+        document.getElementById('show2').style.display = "none";
+    }
+            
+    document.getElementById('tcases').innerHTML = cases.toLocaleString("hi-IN");
+    document.getElementById('dcases').innerHTML = dcases.toLocaleString("hi-IN");
+    document.getElementById('tdeaths').innerHTML = deaths.toLocaleString("hi-IN");
+    document.getElementById('ddeaths').innerHTML = ddeaths.toLocaleString("hi-IN");
+    document.getElementById('tactive').innerHTML = active.toLocaleString("hi-IN");
+    document.getElementById('dactive').innerHTML = dactive.toLocaleString("hi-IN");
+
+
+    let datta = [];
+    let labbels = [];
+    for(let i=0;i<90;i++)
+    {
+        datta.push(array[last-1-i][1].delta['confirmed']);
+        labbels.push(array[last-1-i][0]);
+    }
+
+    //make graph
+    var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: labbels,
+datasets: [{
+    label: 'No. of Daily Cases',
+    data: datta,
+    backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+    ],
+    borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+    ],
+    borderWidth: 1
+}]
+},
+options: {
+scales: {
+    y: {
+        beginAtZero: true
+    },
+    x:{
+        reverse: true
+    }
+}
+}
 });
 
 
 
-
-
-
-
-
-
-
-            //make table
-
-            let date = actualdata.statewise[0].lastupdatedtime;
-            let datestr = "";
-            let index=0;
-            let monthNames = [ "January", "February", "March", "April", "May", "June",
-                            "July", "August", "September", "October", "November", "December" ];
-            for(let i=0;i<date.length;i++)
+// table
+    let table = document.getElementById('statestable');
+    let dict = [0,'state','deltaconfirmed','deltadeaths','confirmed','deaths','vaccinated'];
+    let states = ['Andaman and Nicobar Islands','Andhra Pradesh','Arunachal Pradesh','Assam',
+    'Bihar','Chandigarh','Chhattisgarh','Dadra and Nagar Haveli and Daman and Diu','Delhi','Goa','Gujarat','Haryana',
+    'Himachal Pradesh','Jammu and Kashmir','Jharkhand','Karnataka','Kerala','Ladakh','Lakshadweep','Madhya Pradesh',
+    'Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Puducherry','Punjab','Rajasthan','Sikkim',
+    'Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal'];
+    let rowarray;
+    let end;
+    for(let i=1;i<39;i++)
+    {
+        if(i<34)
+        {
+            rowarray = Object.entries(arr[i-1][1].dates);
+            end = rowarray.length-1;
+            let row = table.insertRow(i);
+            let cell = row.insertCell(0);
+            cell.innerHTML = i;
+            let cel = row.insertCell(1);
+            cel.innerHTML = states[i-1];
+            cel = row.insertCell(2);
+            if(i==1 || i==9 || i==11 || i==18 || i==28 || i==29 )
             {
-                if(date[i]==" ")
+                cel.innerHTML = parseInt(rowarray[end][1].delta7['confirmed']).toLocaleString("hi-IN");
+            }
+            else
+            {
+                cel.innerHTML = parseInt(rowarray[end][1].delta['confirmed']).toLocaleString("hi-IN");
+            }
+            cel = row.insertCell(3);
+            if(i==1 || i== 5 ||i==9|| i==6 || i==8 || i==11 || i==14 || i==18 || i==19 || i==27 || i==28 || i==29)
+            {
+                if(typeof(rowarray[end][1].delta7['deceased'])=='undefined')
                 {
-                    break;
-                }
-                if(date[i]=="/" && index==0)
-                {
-                    index = i;
-                    datestr += " ";
-                }
-                else if(date[i]=="/")
-                {
-                    datestr += " ";
+                    cel.innerHTML = "Data not Available";
                 }
                 else
                 {
-                    datestr += date[i];
+                    cel.innerHTML = parseInt(rowarray[end][1].delta7['deceased']).toLocaleString("hi-IN");
                 }
             }
-            let ss = datestr[index+1]+datestr[index+2];
-            console.log(ss);
-            let id;
-            if(ss[0]==0)
+            else
             {
-                id = ss[1];
+                cel.innerHTML = parseInt(rowarray[end][1].delta['deceased']).toLocaleString("hi-IN");
             }
-            else{
-                id = parseInt(ss);
-            }
-            let month = monthNames[id-1];
-            datestr = "";
-            for(let i=0;i<date.length;i++)
-            {
-                if(date[i]=="/")
-                {
-                    datestr += " ";
-                }
-                else if(i==index+1)
-                {
-                    datestr += month;
-                }
-                else if(i==index+2)
-                {
-                    datestr += "";
-                }
-                else
-                {
-                    datestr += date[i];
-                }
-            }
-            console.log(datestr);
-            document.getElementById('showDate').innerHTML = 'Last Updated on '+ datestr;
-            let cases = parseInt(actualdata.statewise[0].confirmed);
-            let dcases = parseInt(actualdata.statewise[0].deltaconfirmed);
-            let deaths = parseInt(actualdata.statewise[0].deaths);
-            let ddeaths = parseInt(actualdata.statewise[0].deltadeaths);
-            let recovered = parseInt(actualdata.statewise[0].recovered);
-            let drecovered = parseInt(actualdata.statewise[0].deltarecovered);
-            let pactive = (cases-dcases) - (deaths-ddeaths) - (recovered-drecovered);
-            //console.log(cases-deaths-recovered);
-            //console.log(pactive);
-            let active = parseInt(actualdata.statewise[0].active);
+            cel = row.insertCell(4);
+            cel.innerHTML = parseInt(rowarray[end][1].total['confirmed']).toLocaleString("hi-IN");
+            cel = row.insertCell(5);
+            cel.innerHTML = parseInt(rowarray[end][1].total['deceased']).toLocaleString("hi-IN");
+            cel = row.insertCell(6);
+            cel.innerHTML = parseInt(rowarray[end][1].total['vaccinated1']).toLocaleString("hi-IN");
 
-            let dactive = active - pactive;
-            if(dactive<0)
-            {
-                dactive = -dactive;
-                document.getElementById('show1').style.display = "none";
-            }
-            else{
-                document.getElementById('show2').style.display = "none";
-            }
+        }    
+        else if(i>35)
+        {
+            rowarray = Object.entries(arr[i-1][1].dates);
+            end = rowarray.length-1;
+            let row = table.insertRow(i-2);
+            let cell = row.insertCell(0);
+            cell.innerHTML = i-2;
+            let cel = row.insertCell(1);
+            cel.innerHTML = states[i-3];
+            cel = row.insertCell(2);
+            cel.innerHTML = parseInt(rowarray[end][1].delta7['confirmed']).toLocaleString("hi-IN");
+            cel = row.insertCell(3);
+            cel.innerHTML = parseInt(rowarray[end][1].delta7['deceased']).toLocaleString("hi-IN");
+            cel = row.insertCell(4);
+            cel.innerHTML = parseInt(rowarray[end][1].total['confirmed']).toLocaleString("hi-IN");
+            cel = row.insertCell(5);
+            cel.innerHTML = parseInt(rowarray[end][1].total['deceased']).toLocaleString("hi-IN");
+            cel = row.insertCell(6);
+            cel.innerHTML = parseInt(rowarray[end][1].total['vaccinated1']).toLocaleString("hi-IN");
+        }
+    }
             
-            document.getElementById('tcases').innerHTML = cases.toLocaleString("hi-IN");
-            document.getElementById('dcases').innerHTML = dcases.toLocaleString("hi-IN");
-            document.getElementById('tdeaths').innerHTML = deaths.toLocaleString("hi-IN");
-            document.getElementById('ddeaths').innerHTML = ddeaths.toLocaleString("hi-IN");
-            document.getElementById('tactive').innerHTML = active.toLocaleString("hi-IN");
-            document.getElementById('dactive').innerHTML = dactive.toLocaleString("hi-IN");
-            
-            let table = document.getElementById('statestable');
-            let dict = [0,'state','deltaconfirmed','deltadeaths','confirmed','active','deaths','lastupdatedtime'];
-            for(let i=1;i<38;i++)
-            {
-                if(i<31)
-                {
-                    let row = table.insertRow(i);
-                    let cell = row.insertCell(0);
-                    cell.innerHTML = i;
-                    for(let j=1;j<8;j++)
-                  {
-                    let cel = row.insertCell(j);
-                    let str = dict[j];
-                    for (key in actualdata.statewise[i])
-                    {
-                        if(key==str)
-                        {
-                            if(j==1 || j==7)
-                            {
-                                cel.innerHTML = actualdata.statewise[i][key];
-                            }
-                            else
-                            {
-                                cel.innerHTML = parseInt(actualdata.statewise[i][key]).toLocaleString("hi-IN");
-                            }
-                        }
-                    }      
-                    
-                  }
-                }
-                else if(i>31)
-                {
-                    let row = table.insertRow(i-1);
-                    let cell = row.insertCell(0);
-                    cell.innerHTML = i-1;
-                    for(let j=1;j<8;j++)
-                  {
-                    let cel = row.insertCell(j);
-                    let str = dict[j];
-                    for (key in actualdata.statewise[i])
-                    {
-                        if(key==str)
-                        {
-                            if(j==1 || j==7)
-                            {
-                                cel.innerHTML = actualdata.statewise[i][key];
-                            }
-                            else
-                            {
-                                cel.innerHTML = parseInt(actualdata.statewise[i][key]).toLocaleString("hi-IN");
-                            }
-                        }
-                    } 
-                  }
-                }
-                
-            }
 
-            
+
 //vaccine data
 
-let end = actualdata.tested.length;
-let totaldoses = actualdata.tested[end-1].totaldosesadministered;
-if(totaldoses=="")
+let firstdose = array[last-1][1].total['vaccinated1'];
+let dailyfirstdose = array[last-1][1].delta['vaccinated1'];
+let seconddose = array[last-1][1].total['vaccinated2'];
+let dailyseconddose = array[last-1][1].delta['vaccinated2'];
+if(typeof(firstdose)=='undefined'||typeof(dailyfirstdose)=='undefined'||typeof(seconddose)=='undefined'||typeof(dailyseconddose)=='undefined')
 {
-    totaldoses = parseInt(actualdata.tested[end-2].totaldosesadministered);
-    let firstdose = parseInt(actualdata.tested[end-2].firstdoseadministered);
-    let dailydoses = totaldoses - parseInt(actualdata.tested[end-3].totaldosesadministered);
-    let dailyfirstdose = firstdose - parseInt(actualdata.tested[end-3].firstdoseadministered);
-    let seconddose = parseInt(actualdata.tested[end-2].seconddoseadministered);
-    document.getElementById('tvac').innerHTML = totaldoses.toLocaleString("hi-IN");
-    let dailyseconddose = seconddose - parseInt(actualdata.tested[end-3].seconddoseadministered);
-    document.getElementById('tfdose').innerHTML = firstdose.toLocaleString("hi-IN");
-    document.getElementById('dvac').innerHTML = dailydoses.toLocaleString("hi-IN");
-    document.getElementById('tsdose').innerHTML = seconddose.toLocaleString("hi-IN");
-    document.getElementById('dfdose').innerHTML = dailyfirstdose.toLocaleString("hi-IN");
-    document.getElementById('dsdose').innerHTML = dailyseconddose.toLocaleString("hi-IN");
-}
-else{
-    totaldoses =parseInt(totaldoses);
-    let firstdose = parseInt(actualdata.tested[end-1].firstdoseadministered);
-    let dailydoses = totaldoses - parseInt(actualdata.tested[end-2].totaldosesadministered);
-    let dailyfirstdose = firstdose - parseInt(actualdata.tested[end-2].firstdoseadministered);
-    let seconddose = parseInt(actualdata.tested[end-1].seconddoseadministered);
-    document.getElementById('tvac').innerHTML = totaldoses.toLocaleString("hi-IN");
-    let dailyseconddose = seconddose - parseInt(actualdata.tested[end-2].seconddoseadministered);
-    document.getElementById('tfdose').innerHTML = firstdose.toLocaleString("hi-IN");
-    document.getElementById('dvac').innerHTML = dailydoses.toLocaleString("hi-IN");
-    document.getElementById('tsdose').innerHTML = seconddose.toLocaleString("hi-IN");
-    document.getElementById('dfdose').innerHTML = dailyfirstdose.toLocaleString("hi-IN");
-    document.getElementById('dsdose').innerHTML = dailyseconddose.toLocaleString("hi-IN");
-}
+    firstdose = array[last-2][1].total['vaccinated1'];
+    dailyfirstdose = array[last-2][1].delta['vaccinated1'];
+    seconddose = array[last-2][1].total['vaccinated2'];
+    dailyseconddose = array[last-2][1].delta['vaccinated2'];
 
-        })
+}
+let totaldoses = firstdose + seconddose;
+let dailydoses = dailyfirstdose + dailyseconddose;
+document.getElementById('tvac').innerHTML = totaldoses.toLocaleString("hi-IN");
+document.getElementById('tfdose').innerHTML = firstdose.toLocaleString("hi-IN");
+document.getElementById('dvac').innerHTML = dailydoses.toLocaleString("hi-IN");
+document.getElementById('tsdose').innerHTML = seconddose.toLocaleString("hi-IN");
+document.getElementById('dfdose').innerHTML = dailyfirstdose.toLocaleString("hi-IN");
+document.getElementById('dsdose').innerHTML = dailyseconddose.toLocaleString("hi-IN");
+
+
+})
 
         
