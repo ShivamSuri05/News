@@ -135,14 +135,7 @@ scales: {
             cel = row.insertCell(3);
             if(i==1 || i== 5 ||i==9|| i==6 || i==8 || i==11 || i==14 || i==18 || i==19 || i==27 || i==28 || i==29)
             {
-                if(typeof(rowarray[end][1].delta7['deceased'])=='undefined')
-                {
-                    cel.innerHTML = "Data not Available";
-                }
-                else
-                {
-                    cel.innerHTML = parseInt(rowarray[end][1].delta7['deceased']).toLocaleString("hi-IN");
-                }
+                cel.innerHTML = parseInt(rowarray[end][1].delta7['deceased']).toLocaleString("hi-IN");
             }
             else
             {
